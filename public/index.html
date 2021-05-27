@@ -77,11 +77,18 @@
 
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="productsSock">
     <script type="text/template" id="productTemplate">
-      <% for ( let i = 0 , i < products.length ; i++ ) { %>
+      <% for (let i = 0 ; i < products.length ; i ++ ) { console.log(products); %>
       <div class="col-md-3 no-gutters p-3">
-
+        <div class="card" style="width: 100%">
+          <img src="<%= products[i].imageUrl %>" class="card-img-top">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"> <%= products[i].name %> </li>
+            <li class="list-group-item"><%= products[i].description %></li>
+            <li class="list-group-item"><%= products[i].brand %></li>
+          </ul>
+        </div>
       </div>
       <% } %>
     </script>

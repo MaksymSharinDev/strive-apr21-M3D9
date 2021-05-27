@@ -41,9 +41,8 @@ window.onload = () => {
 
         }).then(r => r.json()).then(data => pageData.products.push(data))
     }
-
     const viewProducts = async () => {
-        fetch(`api/product/all`, {
+        await fetch(`api/product/all`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,12 +50,49 @@ window.onload = () => {
             body: JSON.stringify({
                 access_token : pageData['access_token']
             })
-        }).then(r => r.json()).then(data => console.log(data))
+        }).then(r => r.json()).then(data => pageData.products = [...pageData.products, ...data] )
     }
+    const populatePage = () => {
+        //id productTemplate
+        let tmplCache = {};
+        const tmpl = function (str, data) {
+            // Figure out if we're getting a template, or if we need to
+            // load the template - and be sure to cache the result.
+            let fn = !/\W/.test(str) ?
+                tmplCache[str] = tmplCache[str] ||
+                    tmpl(document.getElementById(str).innerHTML) :
+
+                // Generate a reusable function that will serve as a template
+                // generator (and which will be cached).
+                new Function("obj",
+                    "var p=[],print=function(){p.push.apply(p,arguments);};" +
+
+                    // Introduce the data as local variables using with(){}
+                    "with(obj){p.push('" +
+
+                    // Convert the template into pure JavaScript
+                    str
+                        .replace(/[\r\t\n]/g, " ")
+                        .split("<%").join("\t")
+                        .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                        .replace(/\t=(.*?)%>/g, "',$1,'")
+                        .split("\t").join("');")
+                        .split("%>").join("p.push('")
+                        .split("\r").join("\\'")
+                    + "');}return p.join('');");
+
+            // Provide some basic currying to the user
+            return data ? fn(data) : fn;
+        };
+        let productsSock = document.querySelector('#productsSock')
+        productsSock.innerHTML = productsSock.innerHTML + tmpl('productTemplate',pageData)
+        }
     ;(function main(){
         readToken()
             .then( ()=> createProduct() )
-            .then( ()=> viewProducts(  ) )
+            .then( ()=> viewProducts() )
+            .then( ()=> { console.log(pageData); populatePage()}  )
+
     })()
 
 
