@@ -15,24 +15,22 @@
 //MOCK
 window.onload = () => {
     let pageData = {
-        access_token: [],
+        access_token: "",
         products: []
     }
 
     const readToken = async () => {
         await fetch('api/login', {method: 'POST'})
-            .then(r => r.json()).then(data => pageData.access_token = data.access_token)
-
-
+            .then(r => r.json()).then(data => pageData.access_token = data.access_token )
     }
     const createProduct = async () => {
         await fetch('api/product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': pageData['access_token']
             },
             body: JSON.stringify({
+                "access_token" : pageData.access_token,
                 "name": "app test 1",
                 "description": "somthing longer",
                 "brand": "nokia",
@@ -43,13 +41,16 @@ window.onload = () => {
 
         }).then(r => r.json()).then(data => pageData.products.push(data))
     }
+
     const viewProducts = async () => {
-        fetch('api/product', {
-            method: 'GET',
+        fetch('api/product/all', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': pageData['access_token']
-            }
+            },
+            body: JSON.stringify({
+                access_token : pageData['access_token']
+            })
         }).then(r => r.json()).then(data => console.log(data))
     }
     ;(function main(){
@@ -57,9 +58,6 @@ window.onload = () => {
             .then( ()=> createProduct() )
             .then( ()=> viewProducts() )
     })()
-    /*
-
-    */
 
 
 }

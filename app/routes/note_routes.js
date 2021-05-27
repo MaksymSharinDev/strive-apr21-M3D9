@@ -19,23 +19,44 @@ module.exports = function (app, db) {
         }
     })
 
-    app.post('/api/product', (req, res) => {
-        let token = 'Bearer ' + req.body['access_token']
+    app.post('/api/product', async (req, res) => {
+
         try {
-            fetch('https://striveschool-api.herokuapp.com/api/product/', {
+            await fetch('https://striveschool-api.herokuapp.com/api/product/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': token
+                    'Authorization': `Bearer ${req.body['access_token']}`,
                 },
                 body: JSON.stringify(req.body)
-            }).then(response => response.json())
-            .then(data => console.log( data ) ) //res.send(data))
+            })
+            .then( response => response.json() )
+            .then(data => res.send( data ) ) //res.send(data))
+
         } catch (e) {
             res.send(e)
         }
     })
-/*
+    app.post('/api/product/all', async (req, res) => {
+
+        try {
+            await fetch('https://striveschool-api.herokuapp.com/api/product/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${req.body['access_token']}`,
+                },
+                body: JSON.stringify(req.body)
+            })
+                .then( response => response.json() )
+                .then(data => res.send( data ) ) //res.send(data))
+
+        } catch (e) {
+            res.send(e)
+        }
+    })
+
+    /*
     app.get('/api/product', (req, res) => {
         let token = 'Bearer ' + req.body['access_token']
         try {
