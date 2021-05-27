@@ -40,16 +40,15 @@ module.exports = function (app, db) {
     app.post('/api/product/all', async (req, res) => {
 
         try {
-            await fetch('https://striveschool-api.herokuapp.com/api/product/', {
+            await fetch(`https://striveschool-api.herokuapp.com/api/product`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${req.body['access_token']}`,
                 },
-                body: JSON.stringify(req.body)
             })
                 .then( response => response.json() )
-                .then(data => res.send( data ) ) //res.send(data))
+                .then(data => res.send( data ) )
 
         } catch (e) {
             res.send(e)

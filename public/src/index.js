@@ -43,7 +43,7 @@ window.onload = () => {
     }
 
     const viewProducts = async () => {
-        fetch('api/product/all', {
+        fetch(`api/product/all`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ window.onload = () => {
     ;(function main(){
         readToken()
             .then( ()=> createProduct() )
-            .then( ()=> viewProducts() )
+            .then( ()=> viewProducts(  ) )
     })()
 
 
