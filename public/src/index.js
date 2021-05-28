@@ -10,7 +10,7 @@ let pageData = {
     access_token: "",
     products: []
 }
-window.onload = () => {
+
     const readToken = async () =>
         await fetch('api/login', {method: 'POST'})
             .then(r => r.json()).then(data => pageData.access_token = data.access_token)
@@ -81,107 +81,4 @@ window.onload = () => {
                 })
             }).then(r => r.json()).then(() => null) //console.log(`product id:${id} Deleted`))
         }
-    const deleteAll = async () => {
-            for (let i = 0; i<pageData.products.length; i++  ) {
-                try {
-                    await deleteOne(pageData.products[i]._id)
-                } catch (e) {
-                    //console.log(`impossible to delete product ID: ${elem._id}`)
-                }
-            }
-        }
 
-    ;(function main() {
-        [...$('input')].forEach(el => el.value = '')
-        readToken()
-            //.then(() => createProduct())
-            .then(() => viewProducts())
-            .then(() => populatePage())
-    })()
-    ;(function addProductCard() {
-
-
-        document.addEventListener('dragover', e => e.preventDefault())
-        const imgUploadWrapper = $('#addCard .img-upload-wrapper')[0]
-        const imageIcon = $('#addCard .card-img-top i')[0]
-        const ImageUrlForm = $('#addCard .card-img-top .form-div')[0]
-        const ImageSlot = $('#addCard .card-img-top')[0]
-        const imageURLInput = $('#imageURL')[0]
-        const isImageUrl = url => !!url.match(/^http.+(png|jpeg|gif|jpg)$/g)
-        imgUploadWrapper.addEventListener('mouseover', () => {
-            imgUploadWrapper.classList.add('active')
-            imageIcon.classList.add('hover')
-            ImageUrlForm.classList.remove('collapse')
-        })
-        imgUploadWrapper.addEventListener('mouseout', () => {
-            imgUploadWrapper.classList.remove('active')
-            imageIcon.classList.remove('hover')
-            ImageUrlForm.classList.add('collapse')
-        })
-        imgUploadWrapper.addEventListener('dragover', e => e.currentTarget.style.cursor = 'copy')
-        imgUploadWrapper.addEventListener('drop', e => {
-            e.preventDefault()
-            let files = e.dataTransfer.items;
-            if (files) {
-                for (let i = 0; i < files.length; i++) {
-                    let isImage = files[i].type.match('^image/')
-                    isImage ? (() => {
-                        let file = files[i].getAsFile();
-                        const reader = new FileReader();
-                        reader.addEventListener('load', () => {
-                            pageData.imgToLoadBlob = reader.result;
-                            ImageSlot.style.background = `url(${reader.result})`
-                            ImageSlot.style.backgroundSize = 'cover'
-                        })
-                        file ? reader.readAsDataURL(file) : null
-                    })() : null
-                }
-            }
-        })
-
-        const getBase64FromUrl = async (url) => {
-            const data = await fetch(url);
-            const blob = await data.blob();
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                    const base64data = reader.result;
-                    resolve(base64data);
-                }
-            });
-        }
-        imageURLInput.addEventListener('input', e => {
-            console.log( e.currentTarget.value ," | ",isImageUrl(e.currentTarget.value) )
-            isImageUrl(e.currentTarget.value) ?
-                (async () => {
-                    pageData.imgToLoadBlob = await getBase64FromUrl( e.currentTarget.value )
-                    ImageSlot.style.background = `url(${pageData.imgToLoadBlob})`
-                    ImageSlot.style.backgroundSize = 'cover';
-                })()
-                : null
-        })
-
-        const addBtn = $('#addCard [type="submit"] ')
-        addBtn.on('click', e => {
-            e.preventDefault();
-            let inputsValues = [...$('#addCard ul input')].map(el => el.value)
-            uploadImage(pageData.imgToLoadBlob).then(data => {
-                console.log(data);
-                let imgSrc = data.display_url
-                createProduct(imgSrc, inputsValues[0], inputsValues[1], inputsValues[2])
-                    .then(populatePage)
-            })
-            //UPLOAD IMAGE
-
-            /*
-            console.log(imgSrc, inputsValues)
-            */
-        })
-    })()
-    ;(function deleteProductCards() {
-        $('.btn-danger')[0].addEventListener('click', () => {
-            deleteAll().then(() => { populatePage();alert('oh, feeling nuclear today?')})
-        })
-    })()
-}

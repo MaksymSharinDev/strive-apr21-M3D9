@@ -2,3 +2,4 @@
 /node_modules/
 /.idea
 package.json
+/public/src/main.js
