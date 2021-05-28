@@ -1,12 +1,12 @@
 # strive-apr21-M3D9 <br> 
 
-<h2 style="text-align:center">"operation KV-220"</h2>
+## operation KV-220"
 
 ![](docs/preview.gif)
 
 <hr> </hr>
 
-##DEMO: [operation-kv-220.herokuapp.com](operation-kv-220.herokuapp.com)
+## DEMO: [operation-kv-220.herokuapp.com](operation-kv-220.herokuapp.com)
 
 <hr> </hr>
 
