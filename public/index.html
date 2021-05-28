@@ -115,7 +115,7 @@
                     </li>
                     <li class="list-group-item">
                         <input type="text" class="form-control" id="productDescInput"
-                               placeholder="Product Name">
+                               placeholder="Desc">
                     </li>
                     <li class="list-group-item">
                         <input type="text" class="form-control" id="companyNameInput"
@@ -137,7 +137,7 @@
         <script type="text/template" id="productTemplate">
             <% for (let i = 0 ; i < products.length ; i ++ ) { %>
             <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
-                <div class="card" style="width: 100%">
+                <div id="<%=products[i]._id %>" class="card" style="width: 100%">
                     <img src="<%= products[i].imageUrl %>" class="card-img-top">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><%= products[i].name %>
