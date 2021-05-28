@@ -1,4 +1,3 @@
-
 <!--
         START FROM YESTERDAY'S WORK
 
@@ -62,40 +61,124 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <title>Strivezon</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Strivezon</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- Card UI Skeleton -->
+    <link rel="stylesheet" href="style/SkeletonCard.css">
+    <!-- Add Card Section -->
+    <link rel="stylesheet" href="style/addCard.css">
 </head>
 <body>
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="row justify-content-center m-3">
+        <a class="btn btn-danger "> Delete ALL </a>
+    </div>
+    <div class="row justify-content-center"
+         id="addCard">
+        <div class="col-sm-12 col-md-6 col-xl-3 p-3 ">
+            <div class="card" style="width: 100%">
+                <div class="card-img-top d-flex flex-row justify-content-center align-items-center  ">
+                    <div class="img-upload-wrapper d-flex flex-row justify-content-center align-items-center  ">
+                        <i class=" far fa-image text-size-large mx-1"></i>
+                        <div class="form-div d-flex d-column align-content-left mx-1 collapse" >
+                            <form>
+                                <div class="form-group">
+                                    <label for="imageURL">Image URL</label>
+                                    <input type="text" class="form-control" id="imageURL"
+                                           placeholder="https://www.your-image-url.png "
+                                    >
+                                    <script></script>
+                                    <small id="imageURLHelp" class="form-text text-muted">Paste with Ctrl-V <br> and press Enter</small>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <form>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" id="productNameInput"
+                               placeholder="Product Name">
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" id="productDescInput"
+                               placeholder="Product Name">
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" class="form-control" id="companyNameInput"
+                               placeholder="Company">
+                    </li>
+                    <li class="list-group-item text-center">
+                        <a type="submit" class="btn btn-primary">Submit</a>
+                    </li>
+                </ul>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" id="card-loading">
+
+        <script type="text/template" id="productTemplate">
+            <% for (let i = 0 ; i < products.length ; i ++ ) { %>
+            <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
+                <div class="card" style="width: 100%">
+                    <img src="<%= products[i].imageUrl %>" class="card-img-top">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><%= products[i].name %>
+                        </li>
+                        <li class="list-group-item"><%= products[i].description %>
+                        </li>
+                        <li class="list-group-item"><%= products[i].brand %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <% } %>
+        </script>
+        <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
+            <div class="card"></div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
+            <div class="card"></div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
+            <div class="card"></div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-3 no-gutters p-3">
+            <div class="card"></div>
+        </div>
 
     </div>
-  </div>
-  <div class="row" id="productsSock">
-    <script type="text/template" id="productTemplate">
-      <% for (let i = 0 ; i < products.length ; i ++ ) { console.log(products); %>
-      <div class="col-md-3 no-gutters p-3">
-        <div class="card" style="width: 100%">
-          <img src="<%= products[i].imageUrl %>" class="card-img-top">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"> <%= products[i].name %> </li>
-            <li class="list-group-item"><%= products[i].description %></li>
-            <li class="list-group-item"><%= products[i].brand %></li>
-          </ul>
-        </div>
-      </div>
-      <% } %>
-    </script>
-  </div>
+    <div class="row" id="productsSock"></div>
 </div>
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+<!-- Cash -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.1.0/cash.min.js"></script>
+
+
+<!-- Micro Templating -->
+<script src="src/lib/microTemplating.js"></script>
+
+<!-- Main -->
 <script src="src/index.js"></script>
 </body>
 </html>
