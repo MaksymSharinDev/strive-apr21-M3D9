@@ -19,7 +19,7 @@ module.exports = function (app, db) {
                 .then(response => response.json())
                 .then(data => {
                     realToken = data.access_token;
-                    data.access_token = decoyToken
+                    data.access_token = decoyToken;
                     res.send(JSON.stringify(data))
                 })
         } catch (e) {
