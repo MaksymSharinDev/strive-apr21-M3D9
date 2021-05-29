@@ -21,6 +21,16 @@
   
 
 ### i just missed the last homework, and all needed to go wrong,<br>gone hilariously wrong and out of hand LOL:
+Note:
+i that project: 
+- I was awake for 32 hours ( 9:00 a.m. 27/05/21 - 6:00 p.m. 28:00 28/05/21 ) 
+- i learned on the fly
+  - rest API,
+  - express back-end framework
+  - heroku deployments 
+  - codebase organization 
+  - front-end & backend debugging tools 
+  
 CHALLENGE: HACK THE DEMO
 
 
